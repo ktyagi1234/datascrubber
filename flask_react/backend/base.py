@@ -1,7 +1,44 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 
+
 api = Flask(__name__)
+
+
+api.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Pass2020!@172.17.0.2/DataScrubber'
+
+api.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(api)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __init__(self, username, email):
+        self.username = username
+        self.email = email
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+
+# with api.app_context():
+#     db.create_all()
+
+# from api import db
+# db.create(all) 
+
+
+
+
+
+
+
+
+
 cors = CORS(api, resources={r"/foo": {"origins": "http://127.0.0.1:5000"}})
 api.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -16,3 +53,4 @@ def my_profile():
 
 if __name__ == '__main__':
     api.run()
+    
