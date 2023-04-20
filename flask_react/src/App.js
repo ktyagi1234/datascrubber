@@ -12,8 +12,18 @@ export default function Table() {
     let [index,setIndex]=useState()
     let [bolin,setBolin]=useState(false)
     let {name,number,dateOfBirth,email}=inputdata;
+    
+    componentDidMount() {
+        console.log("hey, I just opened this react page on my browser");
+    }
 
-
+    /*
+    CONTINUING TASK 1:
+        Trigger backend endpoint, "/members" and read the data: first print it, and then set it to setArray(data).
+        Refer to "function getData()" that already exist to trigger the endpoint.
+        Read on: componentDidMount() {}
+        Read on lifecycle methods
+    */
     
 
     function data(e){
@@ -27,6 +37,13 @@ export default function Table() {
             alert("Enter your values ")
         }
         else{
+        /*
+        CONTINUING TASK 2:
+            Trigger the backend endpoint, "/addUser" and send the new user data.
+            So instead of doing setArray only, also update the backend ndjson db.
+            - Update frontend via setArray
+            - Update backend via the endpoint
+        */
         setArray([...array,{name,number,dateOfBirth,email}])
         // console.log(inputdata)
         setInputdata({name:"",number:""})
@@ -131,7 +148,6 @@ function App() {
       setProfileData(({
        profile_name: res.name,
         about_me: res.about}))
-      setArray(array.concat(res.arr))
     }).catch((error) => {
       if (error.response) {
         console.log(error.response)
